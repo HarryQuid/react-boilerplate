@@ -9,6 +9,7 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import MapGL from 'react-map-gl';
 
 import { makeSelectRepos, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 import H2 from 'components/H2';
@@ -40,7 +41,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       error,
       repos,
     };
-
+    const property = {
+      viewport: {
+        latitude: 37.785164,
+        longitude: -122.41669,
+        zoom: 16.140440,
+        bearing: -20.55991,
+        pitch: 60,
+      },
+      width: 500,
+      height: 500,
+      token: 'pk.eyJ1IjoibWlrZXdpbGxpYW1zb24iLCJhIjoibzRCYUlGSSJ9.QGvlt6Opm5futGhE5i-1kw',
+    };
     return (
       <article>
         <Helmet
@@ -48,6 +60,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           meta={[
             { name: 'description', content: 'A React.js Boilerplate application homepage' },
           ]}
+        />
+        <MapGL
+          {...property.viewport}
+          mapStyle="mapbox://styles/mapbox/dark-v9"
+          preventStyleDiffing={false}
+          mapboxApiAccessToken={property.token}
+          perspectiveEnabled
+          width={property.width}
+          height={property.height}
         />
         <div>
           <CenteredSection>

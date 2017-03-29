@@ -58,7 +58,12 @@ module.exports = (options) => ({
       query: {
         limit: 10000,
       },
-    }],
+    }, {
+      include: /node_modules\/mapbox-gl.*\.js$/,
+      loader: 'transform-loader?brfs-babel',
+      enforce: 'post',
+    },
+    ],
   },
   plugins: options.plugins.concat([
     new webpack.ProvidePlugin({
@@ -88,6 +93,12 @@ module.exports = (options) => ({
       'jsnext:main',
       'main',
     ],
+    alias: {
+      webworkify: 'webworkify-webpack',
+    },
+  },
+  node: {
+    fs: 'empty',
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
